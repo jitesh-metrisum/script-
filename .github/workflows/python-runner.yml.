@@ -20,16 +20,15 @@ jobs:
         with:
           python-version: '3.10'
 
-      # New Step: Install Python libraries from requirements.txt
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      
-      # New Step: Install Playwright's browser binaries
-      - name: Install Playwright Browsers
-        run: |
-          playwright install --with-deps
+        run: pip install playwright
 
-      # Final Step: Run your actual script
+      - name: Install Playwright Browsers
+        run: playwright install --with-deps
+
       - name: Run Python Playwright script
+        # This 'env' block passes the secrets to your script
+        env:
+          MIS_USERNAME: ${{ secrets.MIS_USERNAME }}
+          MIS_PASSWORD: ${{ secrets.MIS_PASSWORD }}
         run: python 4.py
